@@ -1,0 +1,22 @@
+@startuml
+
+title 信長の野望Online 逢魔依頼予報ボット ユースケース図
+
+rectangle Vercel {
+  actor cron
+}
+
+usecase "投稿本文を作成する" as makebody
+cron --> makebody
+
+usecase "特定の日付の逢魔依頼を予想する" as forecast
+usecase "定型部分を作成する" as template
+makebody ..> forecast : include
+makebody ..> template : include
+
+rectangle X {
+  usecase "Xに投稿する" as post
+}
+cron ---> post
+
+@enduml
