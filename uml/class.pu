@@ -1,0 +1,81 @@
+@startuml
+
+title 信長の野望Online 逢魔依頼予報ボット クラス図
+
+namespace system {
+  class DateTime
+}
+
+namespace Nol {
+  namespace Ouma {
+    class QuestInfo {
+      string placeName
+      string questName
+    }
+
+    class Forecaster {
+      +QuestInfo getForecastByDayTime(daytime dayTime)
+    }
+
+    Forecaster --> QuestInfo
+  }
+
+  namespace Bot {
+    class App {
+      +void init()
+      +void terminate()
+    }
+
+    interface ModelInterface {
+      +void init()
+      +void terminate()
+
+      +string composePostBody()
+    }
+
+    class Model {
+      +void init()
+      +void terminate()
+
+      +string composePostBody()
+    }
+
+    interface ViewInterface {
+      +void init()
+      +void terminate()
+
+      +void notifyPostBodyUpdated(string postBody)
+    }
+
+    class View {
+      +void init()
+      +void terminate()
+
+      +void notifyPostBodyUpdated(string postBody)
+    }
+
+    App *-- ModelInterface
+    App *-- ViewInterface
+    App ..> DateTime
+
+    ModelInterface <|.. Model
+    Model o-- Forecaster
+
+    ViewInterface <|.. View
+  }
+}
+
+namespace vercel {
+  class Vercel
+}
+Vercel --> App
+
+namespace X {
+  class XPoster {
+    +void postToX(string postBody)
+  }
+}
+
+View o-- XPoster
+
+@enduml
