@@ -18,6 +18,8 @@ namespace Nol {
     }
 
     Forecaster --> QuestInfo
+
+    Forecaster ...> DateTime
   }
 
   namespace Bot {
@@ -56,7 +58,7 @@ namespace Nol {
 
     App *-- ModelInterface
     App *-- ViewInterface
-    App ..> DateTime
+    App ......> DateTime
 
     ModelInterface <|.. Model
     Model o-- Forecaster
@@ -68,7 +70,7 @@ namespace Nol {
 namespace vercel {
   class Vercel
 }
-Vercel --> App
+Vercel ..> App
 
 namespace X {
   class XPoster {
@@ -76,6 +78,6 @@ namespace X {
   }
 }
 
-View o-- XPoster
+View o---- XPosterm
 
 @enduml
