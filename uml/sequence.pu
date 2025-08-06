@@ -1,0 +1,94 @@
+@startuml
+
+autoactivate on
+
+title 信長の野望Online 逢魔依頼予報ボット シーケンス図
+
+box "Vercel"
+participant Vercel
+end box
+
+box "nol_bot"
+  participant App
+  participant Model
+  participant View
+end box
+
+box "nol_ouma"
+  participant Forecaster
+end box
+
+
+box "X"
+participant XPoster
+end box
+
+[-> Vercel : cron
+Vercel -> App ** : create
+
+Vercel -> App : init()
+App -> Model ** : create
+App -> Model : init()
+Model -> Forecaster ** : create
+return
+
+App -> View ** : create
+App -> View : init()
+View -> XPoster ** : create
+return
+
+App -> Model : composePostBody()
+Model -> Model : postBodyString += preformattedHeaderString
+return
+loop Wednesday..nextWednesday
+  Model -> Forecaster : getForecastByDayTime(dayTime)
+  alt dayTime in dict
+    Forecaster -> Forecaster : questInfo = dict[dayTime]
+    return
+  else dayTime < minimum dayTime in dict
+    Forecaster -> Forecaster : questInfo = error
+    return
+  else Wednesday && before maintenance
+    Forecaster -> Forecaster : getForecastByDayTime(\n    3 weeks before dayTime\n    before maintenance)
+    return
+  else
+    Forecaster -> Forecaster : next of\n getForecastByDayTime(\n 1 day before dayTime)\n in dict
+    return
+  end
+  return questInfo
+  opt questInfo != error
+    Model -> Model : postBodyString += questInfo
+  end
+  return
+end
+Model -> Model : postBodyString += preformattedFooterString
+return
+return postBodyString
+
+App -> View : notifyPostBodyUpdated(postBodyString)
+View -> XPoster : postToX(postBodyString)
+return
+return
+
+return
+
+Vercel -> App : terminate()
+App -> View : terminate()
+View -> XPoster : terminate()
+return
+View -> XPoster !! : delete
+return
+App -> View !! : delete
+App -> Model : terminate()
+Model -> Forecaster : terminate()
+return
+Model -> Forecaster !! : delete
+return
+App -> Model !! : delete
+return
+
+Vercel -> App !! : delete
+
+return
+
+@enduml
