@@ -1,5 +1,5 @@
 OUT_DIR := out
-OUT_PNG_FILES := $(OUT_DIR)/usecase.png $(OUT_DIR)/class.png
+OUT_PNG_FILES := $(OUT_DIR)/usecase.png $(OUT_DIR)/class.png $(OUT_DIR)/sequence.png
 
 all: png
 
