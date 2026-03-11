@@ -1,0 +1,41 @@
+{
+  "name": "nol_ouma_forecast",
+  "version": "1.0.0",
+  "description": "Forecast which \"Ouma quest of Nobunaga's ambition online\" for specified day will be chosen.",
+  "engines": {
+    "node": "24.14.0"
+  },
+  "volta": {
+    "node": "24.14.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "test": "node --import tsx --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinoruSekine/nol_ouma_forecast.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MinoruSekine/nol_ouma_forecast/issues"
+  },
+  "homepage": "https://github.com/MinoruSekine/nol_ouma_forecast#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.4.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.0"
+  }
+}
